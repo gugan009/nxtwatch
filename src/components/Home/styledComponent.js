@@ -116,7 +116,7 @@ export const NoVideoH1 = styled.h1`
     font-size: 19px;
   }
 `
-export const NovideoPara = styled.p`
+export const NoVideoDescription = styled.p`
   font-family: 'Roboto';
   font-size: 12px;
   text-align: center;

@@ -4,7 +4,7 @@ import Cookies from 'js-cookie'
 import ReactPlayer from 'react-player'
 
 import {GoPrimitiveDot} from 'react-icons/go'
-import {formatDistanceToNow} from 'date-fns'
+// import {formatDistanceToNow} from 'date-fns'
 import {BiLike, BiDislike, BiListPlus} from 'react-icons/bi'
 
 import Header from '../Header'
@@ -86,6 +86,8 @@ class VideoItemDetails extends Component {
         videoDetails: fVideoDetails,
         apiStatus: apiStatusConstants.success,
       })
+    } else {
+      this.setState({apiStatus: apiStatusConstants.failure})
     }
   }
 
@@ -114,7 +116,7 @@ class VideoItemDetails extends Component {
           id,
           channel,
         } = videoDetails
-        const time = formatDistanceToNow(new Date(publishedAt))
+        //  const time = formatDistanceToNow(new Date(publishedAt))
 
         const onClickLike = () => {
           addToLikedVideos(id)
@@ -145,7 +147,7 @@ class VideoItemDetails extends Component {
               <ViewsTime>
                 <Info>{viewCount} views</Info>
                 <Dot as={GoPrimitiveDot} isDarkTheme={isDarkTheme} />
-                <Info>{time} ago</Info>
+                <Info>{publishedAt}</Info>
               </ViewsTime>
               <LikeDisLikeSave>
                 <Button active={isLiked} type="button" onClick={onClickLike}>
@@ -205,7 +207,7 @@ class VideoItemDetails extends Component {
 
   render() {
     return (
-      <div data-testid="videoItemDetails">
+      <div>
         <Header />
         <LeftNavigationBarAndVideoDetailsContainer>
           <LeftNavigationBar />
@@ -213,7 +215,10 @@ class VideoItemDetails extends Component {
             {value => {
               const {isDarkTheme} = value
               return (
-                <VideoDetailsContainer isDarkTheme={isDarkTheme}>
+                <VideoDetailsContainer
+                  data-testid="videoItemDetails"
+                  isDarkTheme={isDarkTheme}
+                >
                   {this.renderVideoItemDetailsPage(isDarkTheme)}
                 </VideoDetailsContainer>
               )

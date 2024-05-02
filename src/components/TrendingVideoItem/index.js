@@ -1,5 +1,5 @@
 import {Link} from 'react-router-dom'
-import {formatDistanceToNow} from 'date-fns'
+// import {formatDistanceToNow} from 'date-fns'
 
 import {GoPrimitiveDot} from 'react-icons/go'
 
@@ -24,7 +24,7 @@ const TrendingVideoItem = props => (
       const {publishedAt, channel, viewCount, thumbnailUrl, id, title} = each
       const {name, profileImageUrl} = channel
       const {isDarkTheme} = value
-      const timeline = formatDistanceToNow(new Date(publishedAt))
+      // const timeline = formatDistanceToNow(new Date(publishedAt))
       const show = true
       return (
         <Trengingli>
@@ -44,7 +44,7 @@ const TrendingVideoItem = props => (
                     />
                     <Info>{viewCount} views</Info>
                     <Dot as={GoPrimitiveDot} />
-                    <Info>{timeline} ago</Info>
+                    <Info>{publishedAt}</Info>
                   </ViewsTime>
                 </VideoViewsTimeName>
               </div>

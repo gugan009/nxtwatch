@@ -28,7 +28,7 @@ import {
   VideosContainer,
   NoVideoImg,
   NoVideoH1,
-  NovideoPara,
+  NoVideoDescription,
   Retry,
   VideosList,
 } from './styledComponent'
@@ -44,7 +44,6 @@ const apiStatusConstants = {
 
 class Home extends Component {
   state = {
-    search: '',
     showBanner: true,
     searchInput: '',
     apiStatus: apiStatusConstants.initial,
@@ -57,13 +56,13 @@ class Home extends Component {
 
   getHomeVideos = async () => {
     this.setState({apiStatus: apiStatusConstants.inProgress})
-    const {search} = this.state
+    const {searchInput} = this.state
     const jwtToken = Cookies.get('jwt_token')
     const option = {
       method: 'GET',
       headers: {Authorization: `Bearer ${jwtToken}`},
     }
-    const url = `https://apis.ccbp.in/videos/all?search=${search}`
+    const url = `https://apis.ccbp.in/videos/all?search=${searchInput}`
 
     const response = await fetch(url, option)
     if (response.ok === true) {
@@ -96,8 +95,6 @@ class Home extends Component {
   }
 
   onClickSearchBtn = async () => {
-    const {searchInput} = this.state
-    await this.setState({search: searchInput})
     this.getHomeVideos()
   }
 
@@ -106,7 +103,7 @@ class Home extends Component {
   }
 
   onClickRetry = () => {
-    this.getHomeVideos()
+    this.setState({searchInput: ''}, this.getHomeVideos)
   }
 
   renderSuccessView = () => (
@@ -124,9 +121,9 @@ class Home extends Component {
               <NoVideoH1 isDarkTheme={isDarkTheme}>
                 No Search results found
               </NoVideoH1>
-              <NovideoPara isDarkTheme={isDarkTheme}>
+              <NoVideoDescription isDarkTheme={isDarkTheme}>
                 Try different key words or remove search filter
-              </NovideoPara>
+              </NoVideoDescription>
               <Retry type="button" onClick={this.onClickRetry}>
                 Retry
               </Retry>
@@ -169,19 +166,18 @@ class Home extends Component {
 
   render() {
     return (
-      <div data-testid="home">
-        <Header />
-        <LeftNavigationBarAndHomeContainer>
-          <LeftNavigationBar />
-          <ThemeAndVideo.Consumer>
-            {value => {
-              const {isDarkTheme} = value
-              const {showBanner, searchInput} = this.state
-              return (
-                <HomeContainer isDarkTheme={isDarkTheme}>
+      <ThemeAndVideo.Consumer>
+        {value => {
+          const {isDarkTheme} = value
+          const {showBanner, searchInput} = this.state
+          return (
+            <div>
+              <Header />
+              <LeftNavigationBarAndHomeContainer>
+                <LeftNavigationBar />
+                <HomeContainer data-testid="home" isDarkTheme={isDarkTheme}>
                   {showBanner && (
                     <BannerContainer data-testid="banner">
-                      {' '}
                       <BannerCloseButton
                         data-testid="close"
                         type="button"
@@ -208,7 +204,6 @@ class Home extends Component {
                         type="search"
                       />
                       <SearchButton
-                        data-testid="searchButton"
                         onClick={this.onClickSearchBtn}
                         type="button"
                         isDarkTheme={isDarkTheme}
@@ -219,11 +214,11 @@ class Home extends Component {
                     {this.renderHomePage()}
                   </HomeContent>
                 </HomeContainer>
-              )
-            }}
-          </ThemeAndVideo.Consumer>
-        </LeftNavigationBarAndHomeContainer>
-      </div>
+              </LeftNavigationBarAndHomeContainer>
+            </div>
+          )
+        }}
+      </ThemeAndVideo.Consumer>
     )
   }
 }

@@ -159,13 +159,13 @@ export const ContactPara = styled.p`
 export const Profile = styled.img`
   width: 25px;
   margin-right: 10px;
-  display: none;
+  // display: none;
   @media screen and (min-width: 768px) {
     display: flex;
   }
 `
 export const LogoutButtonBig = styled.button`
-  display: none;
+  // display: none;
   height: 25px;
   width: 70px;
   background-color: transparent;

@@ -4,6 +4,7 @@ export const LeftNavigationBarAndGamingContainer = styled.div`
   display: flex;
   width: 100vw;
 `
+
 export const GamingContainer = styled.div`
   background-color: ${props => (props.isDarkTheme ? ' #0f0f0f' : '#f9f9f9')};
   height: 90vh;
